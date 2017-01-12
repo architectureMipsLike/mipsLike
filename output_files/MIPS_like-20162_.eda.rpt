@@ -1,5 +1,5 @@
 EDA Netlist Writer report for MIPS_like-20162_
-Wed Jan 04 18:40:42 2017
+Wed Jan 11 19:41:41 2017
 Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Wed Jan 04 18:40:42 2017 ;
+; EDA Netlist Writer Status ; Successful - Wed Jan 11 19:41:41 2017 ;
 ; Revision Name             ; MIPS_like-20162_                      ;
 ; Top-level Entity Name     ; MIPS_like20162                        ;
 ; Family                    ; Cyclone V                             ;
@@ -67,13 +67,13 @@ agreement for further details.
 +---------------------------------------------------------------------------------------------------+------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------+
-; Simulation Generated Files                                                                                ;
-+-----------------------------------------------------------------------------------------------------------+
-; Generated Files                                                                                           ;
-+-----------------------------------------------------------------------------------------------------------+
-; C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/VHD/simulation/modelsim/MIPS_like-20162_.vho ;
-+-----------------------------------------------------------------------------------------------------------+
++------------------------------------------------------------------+
+; Simulation Generated Files                                       ;
++------------------------------------------------------------------+
+; Generated Files                                                  ;
++------------------------------------------------------------------+
+; C:/altera_lite/15.1/modelsim_ase/win32aloem/MIPS_like-20162_.vho ;
++------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -82,13 +82,13 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
     Info: Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
-    Info: Processing started: Wed Jan 04 18:40:40 2017
+    Info: Processing started: Wed Jan 11 19:41:39 2017
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off MIPS_like-20162_ -c MIPS_like-20162_
 Warning (10905): Generated the EDA functional simulation files although EDA timing simulation option is chosen.
-Info (204019): Generated file MIPS_like-20162_.vho in folder "C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/VHD/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file MIPS_like-20162_.vho in folder "C:/altera_lite/15.1/modelsim_ase/win32aloem/" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 803 megabytes
-    Info: Processing ended: Wed Jan 04 18:40:42 2017
+    Info: Peak virtual memory: 805 megabytes
+    Info: Processing ended: Wed Jan 11 19:41:41 2017
     Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 

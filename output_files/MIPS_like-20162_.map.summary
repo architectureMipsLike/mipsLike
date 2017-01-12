@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Wed Jan 04 18:37:49 2017
+Analysis & Synthesis Status : Successful - Wed Jan 11 19:38:37 2017
 Quartus Prime Version : 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 Revision Name : MIPS_like-20162_
 Top-level Entity Name : MIPS_like20162
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 393
+Total registers : 395
 Total pins : 67
 Total virtual pins : 0
 Total block memory bits : 16,384

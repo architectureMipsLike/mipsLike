@@ -1,0 +1,32 @@
+# ERROR: No extended dataflow license exists
+# do MIPS_like-20162__run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim ALTERA vmap 10.4b Lib Mapping Utility 2015.05 May 27 2015
+# vmap -modelsim_quiet work rtl_work 
+# Copying C:/altera_lite/15.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:/altera_lite/15.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vcom -93 -work work {C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/MIPS_like-20162_.vhd}
+# Model Technology ModelSim ALTERA vcom 10.4b Compiler 2015.05 May 27 2015
+# Start time: 13:42:47 on Jan 10,2017
+# vcom -reportprogress 300 -93 -work work C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/MIPS_like-20162_.vhd 
+# -- Loading package STANDARD
+# init_dbinfo() DATABASE ERROR: (sqlite3_open C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/simulation/modelsim/rtl_work/_lib.qdb): unable to open database file
+# mtilibWrite(): INTERNAL ERROR: Unexpected null object encountered
+# ** Fatal: (vcom-9) Problem while writing token file "C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/simulation/modelsim/rtl_work/_temp/vcom8khryg".
+# 
+# O sistema não pode encontrar o caminho especificado. (GetLastError() = 3)
+# ** Error: C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/MIPS_like-20162_.vhd(1): VHDL Compiler exiting
+# End time: 13:42:47 on Jan 10,2017, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+# ** Error: C:/altera_lite/15.1/modelsim_ase/win32aloem/vcom failed.
+# Error in macro ./MIPS_like-20162__run_msim_rtl_vhdl.do line 8
+# C:/altera_lite/15.1/modelsim_ase/win32aloem/vcom failed.
+#     while executing
+# "vcom -93 -work work {C:/Users/Pablo Vinícius/Desktop/Arquitetura - Trabalho Final/mipsLike/MIPS_like-20162_.vhd}"

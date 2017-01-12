@@ -66,49 +66,52 @@ ARCHITECTURE arch OF MIPS_like20162 IS
 	SIGNAL over							:STD_LOGIC;
 	SIGNAL distancia					:STD_LOGIC_VECTOR(3 DOWNTO 0);
 	SIGNAL result_shifter			:STD_LOGIC_VECTOR(15 downto 0);
+
 	
-
-	--COMPONENT  b_shifter
-	--GENERIC 
-	--(
-		--LPM_WIDTH : natural;    -- MUST be greater than 0
-      --LPM_WIDTHDIST : natural;    -- MUST be greater than 0
-	--	LPM_SHIFTTYPE : string := "LOGICAL";
-	--	LPM_TYPE : string := L_CLSHIFT;
-	--	LPM_HINT : string := "UNUSED");
---	PORT 
-	--(
-		--DATA : in STD_LOGIC_VECTOR(15 DOWNTO 0); 
-		--DISTANCE : in STD_LOGIC_VECTOR(6 DOWNTO 0); 
-		--DIRECTION : in STD_LOGIC;
-	--	RESULT : out STD_LOGIC_VECTOR(15 DOWNTO 0);
-	--	UNDERFLOW : out STD_LOGIC;
-	--	OVERFLOW : out STD_LOGIC);
---	END COMPONENT;
-
+	component memory
+	PORT
+	(
+		address		: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+		clock		: IN STD_LOGIC  := '1';
+		data		: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+		wren		: IN STD_LOGIC ;
+		q		: OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
+	);
+	end component;
+	
+	
 	
 BEGIN
-		-- Utilizando o component altsyncram(Memoria Ram Sincrona da Altera)
-		-- para representar a memoria do mp3 (256 palavras de 16-bit)
-		memory: altsyncram
-		-- Mapeamento dos genÈricos, configurando a ram.
-		GENERIC MAP (
-			operation_mode => "SINGLE_PORT", 				-- Somente um porta de entrada.
-			width_a => 16,											-- Largura do dado armazenado.
-			widthad_a => 10,										-- Largura do endereco da memoria.(verificar porque utilizar 10 e não 16)
-			lpm_type => "altsyncram",							-- Tipo do modulo da biblioteca parametrizada.
-			outdata_reg_a => "UNREGISTERED",
-			init_file => "program.mif",						-- Programa a ser executado (inicializado na memoria)
-			intended_device_family => "Cyclone"				-- ??
-		)
-		-- Mapeamento das portas, entradas e saidas.
+
+
+		memory_inst : memory
 		PORT MAP (
-			address_a => memory_address_register(9 DOWNTO 0),		-- Endereco de memoria (MAR)
-			clock0 => clock,													-- Memoria sincrona a subida do clock.
-			data_a => Mlike_out,												-- Dado de entrada na memoria para escrita.
-			wren_a => memory_write, 										-- Habilitar escrita. Leitura = '0' e Escrita = '1'. 
-			q_a => memory_data_register									-- Dado de saida da memoria
-		);
+		address	 => memory_address_register(9 DOWNTO 0),
+		clock	 => clock,
+		data	 => Mlike_out,
+		wren	 => memory_write,
+		q	 => memory_data_register
+	);
+
+		--memory: altsyncram
+		-- Mapeamento dos genÈricos, configurando a ram.
+		--GENERIC MAP (
+			--operation_mode => "SINGLE_PORT", 				-- Somente um porta de entrada.
+--			width_a => 16,											-- Largura do dado armazenado.
+	--		widthad_a => 10,										-- Largura do endereco da memoria.(verificar porque utilizar 10 e não 16)
+		--	lpm_type => "altsyncram",							-- Tipo do modulo da biblioteca parametrizada.
+			--outdata_reg_a => "UNREGISTERED",
+	--		init_file => "program.mif",						-- Programa a ser executado (inicializado na memoria)
+		--	intended_device_family => "Cyclone"				-- ??
+	--	)
+		-- Mapeamento das portas, entradas e saidas.
+	--	PORT MAP (
+		--	address_a => memory_address_register(9 DOWNTO 0),		-- Endereco de memoria (MAR)
+		--	clock0 => clock,													-- Memoria sincrona a subida do clock.
+		--	data_a => Mlike_out,												-- Dado de entrada na memoria para escrita.
+		--	wren_a => memory_write, 										-- Habilitar escrita. Leitura = '0' e Escrita = '1'. 
+		--	q_a => memory_data_register									-- Dado de saida da memoria
+---		);
 		
 		shifter: LPM_CLSHIFT
 			GENERIC MAP(
@@ -138,10 +141,9 @@ BEGIN
 		memory_write_out <= memory_write;								-- Habilitacao de escrita.
 
 		
-		--entender porque esses caras estão aqui e nao dentro
+		
 		imm_signal_ext(15 DOWNTO 0) <= conv_std_Logic_vector(-conv_integer(instruction_register(6)),9)&instruction_register(6 DOWNTO 0);		-- Imediato para Ldi e Sti
 		ji_jli_address(15 DOWNTO 0) <= program_counter(15 DOWNTO 11)&instruction_register(10 DOWNTO 0);							-- Endereco do Ji e Jli
-		
 		
 		PROCESS (clock, reset)
 		BEGIN
@@ -165,7 +167,7 @@ BEGIN
 			WHEN decode =>
 				fontA_register(15 DOWNTO 0) <= bank_registers(conv_integer(instruction_register(10 DOWNTO 7)))(15 DOWNTO 0);	-- Leitura de registrador fonte A (Recebe dado de Ri)
 				fontB_register(15 DOWNTO 0) <= bank_registers(conv_integer(instruction_register(6 DOWNTO 3)))(15 DOWNTO 0);	-- Leitura de registrador fonte B (Recebe dado de Rj)
-				
+		
 		
 				IF (Instruction_register(15 DOWNTO 11)) = "00000" THEN		-- CODOP 00000 : instrucoes no formato 5 4 4
 					CASE instruction_register(2 DOWNTO 0) IS 		-- Campo FUNC sendo analisado
@@ -214,9 +216,9 @@ BEGIN
 						WHEN "10111" =>
 							state <= exec_subi; --FEITA
 						WHEN "11001" =>			
-							state <= exec_shl;
+							state <= exec_shl; --FEITA
 						WHEN "11011" =>			
-							state <= exec_shr;	
+							state <= exec_shr; --FEITA
 						WHEN "10000" =>
 						    state <= exec_ji;	--FEITA
 						WHEN "10010" =>
@@ -310,6 +312,8 @@ BEGIN
 			WHEN exec_cmp =>
 				IF (fontA_register(15 DOWNTO 0) - fontB_register(15 DOWNTO 0) = "0000000000000000") THEN  --Se Ri e Rj são iguais, o bit 1 do STR (bit EQ) recebe 1
 					state_register(1) <= '1';
+				ELSE
+					state_register(1) <= '0';
 				END IF;
 			--	program_counter <= program_counter + 1;	
 				state <= fetch;
@@ -318,6 +322,8 @@ BEGIN
 			WHEN exec_set =>
 				IF (fontA_register(15 DOWNTO 0) = "0000000000000000") THEN  --Se Ri for zero, o bit 2 do STR (bit ZE) recebe 1
 					state_register(2) <= '1';
+				ELSE
+					state_register(2) <= '0';
 				END IF;
 				state_register(15) <= fontA_register(15);  --copia do bit mais significativo
 				state_register(0) <= fontA_register(0); --copia do bit menos significativo
@@ -413,7 +419,7 @@ BEGIN
 			WHEN exec_bmsb =>
 			--	program_counter <= program_counter + 1;
 				ula_register(15 DOWNTO 0) <= program_counter + imm_signal_ext;
-				IF (state_register(1) = '1') THEN  --Se o bit MSB do STR for 1
+				IF (state_register(15) = '1') THEN  --Se o bit MSB do STR for 1
 					program_counter(15 DOWNTO 0) <= ula_register(15 DOWNTO 0);
 				END IF;
 				state <= fetch;	
@@ -422,7 +428,7 @@ BEGIN
 			WHEN exec_blsb =>
 			--	program_counter <= program_counter + 1;
 				ula_register(15 DOWNTO 0) <= program_counter + imm_signal_ext;
-				IF (state_register(1) = '1') THEN  --Se o bit LSB do STR for 1
+				IF (state_register(0) = '1') THEN  --Se o bit LSB do STR for 1
 					program_counter(15 DOWNTO 0) <= ula_register(15 DOWNTO 0);
 				END IF;
 				state <= fetch;
@@ -437,12 +443,12 @@ BEGIN
 	
 	
 	WITH state SELECT
-		memory_address_register <=	"0000000000000000" 				WHEN reset_pc,	
-						ula_register											WHEN exec_ldi,
-						ula_register											WHEN exec_sti,
-						ula_register											WHEN exec_ldr,
-						ula_register											WHEN exec_str,
-						program_counter										WHEN OTHERS;
+		memory_address_register <=	"0000000000000000" 									WHEN reset_pc,	
+											ula_register											WHEN exec_ldi,
+											ula_register											WHEN exec_sti,
+											ula_register											WHEN exec_ldr,
+											ula_register											WHEN exec_str,
+											program_counter										WHEN OTHERS;
 
 	
 	-- Habilitar a escrita ou leitura.
